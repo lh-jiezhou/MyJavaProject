@@ -192,3 +192,19 @@ J2EE的整体整合解决方案和自动配置都在spring-boot-autoconfigure-2.
 
 
 
+### 三、使用Spring Initializer快速创建Spring Boot项目
+
+IDE都支持使用spring的项目创建向导快速创建一个spring boot项目；
+
+IDEA为例：新建项目选择Spring Initializer
+
+默认生成的Spring Boot项目；
+
+- 主程序已经生成好，我们只需要我们自己的逻辑
+- resources文件夹中目录结构
+  - static： 保存所有的静态资源；js\css\images
+  - templates：保存所有的模板页面；（Spring Boot默认jar包使用嵌入式的Tomcat,默认不支持jsp页面）；可以使用模板引擎（freemarker\ thymeleaf）
+  - application.properties: Spring Boot配置文件
+
+
+
