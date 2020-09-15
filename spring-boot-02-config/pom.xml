@@ -29,9 +29,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
+                <!--支持在JUnit 5平台上运行JUnit 3和JUnit 4编写的测试。-->
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+                <!--Junit5 测试-->
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-engine</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
