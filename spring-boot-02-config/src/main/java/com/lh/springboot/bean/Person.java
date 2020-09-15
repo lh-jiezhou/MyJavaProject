@@ -21,7 +21,7 @@ import java.util.Map;
  * 只有这个组件是容器的组件，才能使用容器提供的@ConfigurationProperties功能
  */
 
-@PropertySource(value = {"classpath:person.properties"}) // classpath:后不加空格
+//@PropertySource(value = {"classpath:person.properties"}) // classpath:后不加空格
 @Component
 @ConfigurationProperties(prefix = "person")
 //@Validated // 启动校验 例如 校验邮箱@Email类型

@@ -1,6 +1,21 @@
 # 配置端口
-#server:
-#  port: 8081
+server:
+  port: 8082
+# 激活
+spring:
+  profiles:
+    active: dev
+---
+server:
+  port: 8083
+spring:
+  profiles: dev
+
+---
+server:
+  port: 8084
+spring:
+  profiles: prod
 
 #person:
 #  lastName: zhangsan
@@ -14,3 +29,4 @@
 #  dog:
 #    name: 小狗
 #    age: 2
+

@@ -489,5 +489,89 @@ public class MyAppConfig {
 
 ### 4、配置文件占位符
 
-p15
+#### 1）随机数
+
+```properties
+${random.value},${random.int}, ${random.long},  ${random.int(10)}
+```
+
+####2) 占位符获取之前配置的值，如果没有可以是用: 指定默认值
+
+```properties
+person.last-name=张三${random.uuid} 
+# 随机数
+person.age=${random.int} 
+person.birth=2017/12/15
+person.boss=false
+person.maps.k1 = v1
+person.maps.k2 = v2
+person.lists=a, b, c
+# 占位符
+#person.dog.name=${person.last-name}_dog
+# 默认值 :
+person.dog.name=${person.hello:hello}_dog 
+person.dog.age=15
+```
+
+### 5、Profile文件 多环境支持
+
+- 开发人员：开发环境 dev
+- 项目发布后：生产环境 prob
+- 测试期间：测试环境 
+
+#### 1）多Profile文件
+
+我们在主配置文件编写的时候，文件名可以是 application-{profile}.properties/yml
+
+默认使用的application.properties的配置
+
+#### 2）yml支持多文档块方式
+
+```yml
+# 配置端口
+server:
+  port: 8082
+# 激活
+spring:
+  profiles:
+    active: dev
+---
+# 文档块
+server:
+  port: 8083
+spring:
+  profiles: dev
+
+---
+server:
+  port: 8084
+spring:
+  profiles: prod  # 指定属于哪个环境
+```
+
+
+
+#### 3）激活指定Profile
+
+​	1、在配置文件(application.properties)中指定 spring.profiles.active=dev
+
+​	2、命令行 
+
+​			--spring.profils.active=dev
+
+​			在Run/Debug Configurations中 Program arguments加上面那一行 
+
+​			或者 java -jar spring-xxx.jar --spring.profils.active=dev
+
+​	3、虚拟机参数
+
+​			-Dspring.profils.active=dev
+
+​			在Run/Debug Configurations中 VM options 加上面那一行 
+
+
+
+### 6、配置文件加载位置
+
+
 
