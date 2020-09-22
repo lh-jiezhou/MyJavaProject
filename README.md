@@ -590,3 +590,299 @@ SpringBoot会从这四个位置全部加载主配置文件;**互补配置;**
 项目打包好以后，我们可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置;指定配置文件和默认加载的这些配置文件共同起作用形成互补配置；
 
 
+<<<<<<< HEAD
+
+###7、外部配置加载顺序
+
+**SpringBoot 也可以从以下位置加载配置；优先级从高到低；高优先级的配置覆盖低优先级的配置，所有的配置会形成互补配置**
+
+1、命令行参数 
+
+​	java -jar xxxx.jar --server.port = 8087
+
+2、来自java:com/env的 JNDI属性
+
+3、Java系统属性（System.getProperties() ）
+
+4、操作系统环境变量
+
+5、RandomValuePropertySource 配置的 random.* 属性值
+
+.....等等
+
+**由jar包外向jar包内进行寻找;**
+**优先加载带profile**
+
+6.jar包外部的application-{profile}.properties或application.yml(带spring.profile)配置文件 （同一文件夹下）
+7.jar包内部的application-{profile}.properties或application.yml(带spring.profile)配置文件
+
+**再来加载不带profile**
+8.jar包外部的application.properties或application.yml(不带spring.profile)配置文件
+9.jar包内部的application.properties或application.yml(不带spring.profile)配置文件
+
+10.@Configuration注解类上的@PropertySource
+11.通过SpringApplication.setDefaultProperties指定的默认属性
+
+所有支持的配置加载来源 ，参考官方文档
+
+
+
+###<u>8、自动配置原理</u>
+
+#### 1、自动配置原理
+
+配置文件到底能写什么？怎么写？自动配置原理：
+
+[配置文件能配置的属性参照：](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#server-properties)
+
+
+
+**自动配置原理：（重要！！）**
+
+1）、SpringBoot启动的时候加载主配置类，开启了自动配置功能 @EnableAutoConfiguration
+
+**2)、@EnableAutoConfiguration作用：**
+
+  - 利用AutoConfigurationImportSelector 给容器中导入一些组件
+
+  - 查看selectImport()方法的内容
+
+  - ```java
+    autoConfigurationEntry = this.getAutoConfigurationEntry(annotationMetadata);
+    return StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());
+    ```
+
+- ```java
+  List<String> configurations = this.getCandidateConfigurations(annotationMetadata, attributes);
+  
+  loadSpringFactories:
+   Enumeration<URL> urls = classLoader != null ? classLoader.getResources("META-INF/spring.factories") : ClassLoader.getSystemResources("META-INF/spring.factories");
+  
+  扫描所有jar包类下路径下的 META-INF/spring.factories
+  把扫描到的这些文件的内容包装成properties对象
+  从properties中获取到 EnableAutoConfiguration.class类（类名）对应的值，然后把它们添加在容器中 
+  ```
+
+
+
+**将类路径下 META-INF/spring.factories 里面配置的所有EnableAutoConfiguration的值加入到了容器中**
+
+```properties
+spring.factories 文件...
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\
+org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\
+org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\
+org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,\
+org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration,\
+org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration,\
+...
+```
+
+每一个这样的 xxxAutoConfiguration类都是容器中的一个组件，都加入到容器中，用他们来做自动配置
+
+3）、每一个自动配置类进行自动配置功能：
+
+4）、以HttpEncodingAutoConfiguration 为例解释自动配置原理；
+
+```java
+// 表示这是一个配置类，以前编写的配置文件一样也可以给容器中加组件
+@Configuration(
+    proxyBeanMethods = false
+)
+// 启用指定类的 ConfigurationProperties功能
+// ConfigurationProperties功能：将配置文件中对应的值和ServerProperties绑定起来
+@EnableConfigurationProperties({ServerProperties.class})
+//Spring底层@Conditional注解，根据不同的条件，如果满足指定的条件，整个配置类里面的配置就会生效， 判断当前应用是否是web应用，如果是，当前配置类生效
+@ConditionalOnWebApplication(
+    type = Type.SERVLET
+)
+// 判断当前项目有没有CharacterEncodingFilter这个类
+// CharacterEncodingFilter:SpringMVC中进行乱码解决的过滤器
+@ConditionalOnClass({CharacterEncodingFilter.class})
+// 判断配置文件中是否存在某个配置: server.servlet.encoding
+@ConditionalOnProperty(
+    prefix = "server.servlet.encoding",
+    value = {"enabled"},
+    matchIfMissing = true // 如果不存在，判断也是成立的
+)
+// 即使我们配置文件中不配置server.servlet.encoding.enable=true,也是默认生效的
+public class HttpEncodingAutoConfiguration {
+    
+    // 他已经和SpringBoot的配置文件映射了
+    private final Encoding properties;
+
+    // 只有一个有参构造器的情况下，参数的值就会从容器中拿
+    public HttpEncodingAutoConfiguration(ServerProperties properties) {
+        this.properties = properties.getServlet().getEncoding();
+    }
+    
+    @Bean // 给容器中添加一个组件，这个组件的某些值需要从properties中获取
+    @ConditionalOnMissingBean
+    public CharacterEncodingFilter characterEncodingFilter() {
+        CharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
+        filter.setEncoding(this.properties.getCharset().name());
+        filter.setForceRequestEncoding(this.properties.shouldForce(org.springframework.boot.web.servlet.server.Encoding.Type.REQUEST));
+        filter.setForceResponseEncoding(this.properties.shouldForce(org.springframework.boot.web.servlet.server.Encoding.Type.RESPONSE));
+        return filter;
+    }
+```
+
+根据当前不同的条件判断，决定这个配置类是否生效?
+
+**一旦这个配置类生效，这个配置类就会给容器中添加各种组件；这些组件的属性是从对应的properties类中获取的，这些类里面的每一个属性又是和配置文件绑定的**。
+
+
+
+application.properties** 中能配置的类都来源于这个功能的properties类
+
+spring.http.
+
+
+
+5）、所有在配置文件中能配置的属性都是在xxxxProperties类中封装者;配置文件能配置什么就可以参照某个功育能对应的这个属性类
+
+```java
+ServerProperties类：
+
+// 从配置文件中获取指定的值和Bean属性进行绑定
+@ConfigurationProperties(
+    prefix = "server",
+    ignoreUnknownFields = true
+)
+public class ServerProperties {
+```
+
+
+
+**精髓：**
+
+	1. **SpringBoot 启动会加载大量的自动配置类**
+ 	2. **我们看我们需要的功能有没有SpringBoot默认写好的自动配置类**
+ 	3. **我们再来看这个自动配置类中到底配置了哪些组件；（只要有我们要用的组件，我们就不需要再来配置了）**
+ 	4. **给容器中自动配置类添加属性的时候，会从properties类中获取某些属性，我们就可以在配置文件中指定这些属性的值；**
+
+
+
+xxxAutoConfiguration: 自动配置类
+
+给容器中添加组件
+
+xxxProperties: 封装配置文件中相关属性
+
+
+
+#### 2、其他细节
+
+1）、@**Controller** 派生注解的（Spring注解版原生的@Controller作用）
+
+作用：必须是@Controller 指定的条件成立，才给容器中添加组件，配置类里边的所有内容才生效；
+
+| Conditional扩展注解             | 作用（判断是否满足当前指定条件）                 |
+| ------------------------------- | ------------------------------------------------ |
+| @ConditionalOnjava              | 系统的java版本是否符合要求                       |
+| @ConditionalOnBean              | 容器中存在指定Bean ;                             |
+| @ConditionalOnMissingBean       | 容器中不存在指定Bean ;                           |
+| @ConditionalOnExpression        | 满足SpEL表达式指定                               |
+| @ConditionalOnClass             | 系统中有指定的类                                 |
+| @ConditionalOnMissingClass      | 系统中没有指定的类                               |
+| @ConditionalonSingleCandidate   | 容器中只有一个指定的Bean，或者这个Bean是首选Bean |
+| @ConditionalOnProperty          | 系统中指定的属性是否有指定的值                   |
+| @ConditionalOnResource          | 类路径下是否存在指定资源文件                     |
+| @ConditionalOnWebApplication    | 当前是web环境                                    |
+| @ConditionalOnNotWebApplication | 当前不是web环境                                  |
+| @ConditionalOnjndi              | JNDI存在指定项                                   |
+
+**自动配置类必须在一定的条件下才能生效**；
+
+我们怎么知道哪些自动配置类生效？
+
+可以通过启用SpringBoot 的 debug 模式 ：(application.properties 中 **debug=true**属性)
+
+来让控制台打印**自动配置报告**，这样就可以很方便的知道哪些自动配置类生效
+
+```java
+============================
+CONDITIONS EVALUATION REPORT
+============================
+
+
+Positive matches: （自动配置类启动的）
+-----------------
+
+   AopAutoConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.auto=true) matched (OnPropertyCondition)
+   AopAutoConfiguration.ClassProxyingConfiguration matched:
+      - @ConditionalOnMissingClass did not find unwanted class 'org.aspectj.weaver.Advice' (OnClassCondition)
+      - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+          
+Negative matches:（自动配置类没启动的，没有匹配成功的自动配置类）
+-----------------
+
+   ActiveMQAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.jms.ConnectionFactory' (OnClassCondition)
+
+   AopAutoConfiguration.AspectJAutoProxyingConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.aspectj.weaver.Advice' (OnClassCondition)
+
+```
+
+
+
+
+
+# 三、日志
+
+## 1、日志框架
+
+小张; 开发一个大型系统;
+	1、System.out.println("");将关键数据打印在控制台﹔去掉? 写在一个文件?
+	2、框架来记录系统的一些运行时信息; 日志框架; zhanglogging.jar ;
+	3、高大上的几个功能? 异步模式? 自动归档? xxx ?  zhanglogging-good.jar ?
+	4、将以前框架卸下来?换上新的框架，重新修改之前相关的APl ; zhanglogging-prefect.jar ;
+	5、采用 JDBC---数据库驱动 模式;
+		写了一个统一的接口层﹔日志门面（日志的一个抽象层）; logging-abstract.jar ;
+		给项目中导入具体的日志实现就行了;我们之前的日志框架都是实现的抽象层﹔
+市面上的日志框架﹔
+
+
+
+市面上的日志框架；
+
+JUL、JCL、Jboss-logging、logback、log4j、log4j2、slf4j...
+
+| 日志门面（日志的抽象层）                                     | 日志实现                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ~~JCL (Jakarta Commons Logging )~~、SLF4j ( Simple Logging Facade for Java）、jboss-logging | Log4j -还行、~~JUL ( java.util.logging )-凑数~~、Log4j2-最先进还未适配、Logback-较先进 |
+
+左边选一个门面（抽象层）、右边来选一个实现
+
+推荐：
+
+日志门面：SLF4J
+
+日志实现：Logback；（或者Log4j2）
+
+
+
+SpringBoot: 底层是Spring框架，Spring框架默认是用 JCL
+
+​	**SpringBoot 选用 SLF4j 和 logback**
+
+
+
+## 2、SLF4j使用
+
+### 1、如何在系统中使用SLF4j
+
+p22
+=======
+>>>>>>> 5219207e2e9f6cb6696fb0ce01f201851ce37395
