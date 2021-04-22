@@ -198,6 +198,10 @@ J2EE的整体整合解决方案和自动配置都在spring-boot-autoconfigure-2.
 
 
 
+![image-20210420193356672](C:\Users\89785\AppData\Roaming\Typora\typora-user-images\image-20210420193356672.png)
+
+
+
 ## 6、使用Spring Initializer快速创建Spring Boot项目
 
 IDE都支持使用spring的项目创建向导快速创建一个spring boot项目；
@@ -764,9 +768,9 @@ public class ServerProperties {
 **精髓：**
 
 	1. **SpringBoot 启动会加载大量的自动配置类**
- 	2. **我们看我们需要的功能有没有SpringBoot默认写好的自动配置类**
- 	3. **我们再来看这个自动配置类中到底配置了哪些组件；（只要有我们要用的组件，我们就不需要再来配置了）**
- 	4. **给容器中自动配置类添加属性的时候，会从properties类中获取某些属性，我们就可以在配置文件中指定这些属性的值；**
+	2. **我们看我们需要的功能有没有SpringBoot默认写好的自动配置类**
+	3. **我们再来看这个自动配置类中到底配置了哪些组件；（只要有我们要用的组件，我们就不需要再来配置了）**
+	4. **给容器中自动配置类添加属性的时候，会从properties类中获取某些属性，我们就可以在配置文件中指定这些属性的值；**
 
 
 
