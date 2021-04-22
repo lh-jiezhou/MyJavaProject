@@ -6,11 +6,11 @@
 
 ## 3、环境准备
 
-##4、第一个Hello World程序
+## 4、第一个Hello World程序
 
-###1. 创建一个maven工程；（.jar）
+### 1. 创建一个maven工程；（.jar）
 
-###2. 导入spring boot相关的依赖
+### 2. 导入spring boot相关的依赖
 
 ```xml
 <parent>
@@ -28,7 +28,7 @@
 </dependencies>
 ```
 
-###3. 编写一个主程序，启动spring boot 应用
+### 3. 编写一个主程序，启动spring boot 应用
 
 HelloWorldMainApplication.java
 
@@ -49,7 +49,7 @@ public class HelloWorldMainApplication {
 }
 ```
 
-###4. 编写相关的Controller、Service
+### 4. 编写相关的Controller、Service
 
 ```java
 @Controller
@@ -63,9 +63,9 @@ public class HelloController {
 }
 ```
 
-###5. 运行主程序测试
+### 5. 运行主程序测试
 
-###6. 简化部署
+### 6. 简化部署
 
 ```xml
 <build>
@@ -89,7 +89,7 @@ public class HelloController {
 
 ## 5、Holle World探究
 
-###1、POM文件
+### 1、POM文件
 
 #### 1. 父项目
 
@@ -129,7 +129,7 @@ spring-boot-starter-**web**：
 
 ​	Spring Boot将所有的功能场景都抽取出来，做成一个个的starters(启动器)，只需要在项目里面引入这些starters，则相关场景的的所有依赖都会导入进来.要用什么功能就导入什么场景启动器
 
-###2、主程序类、主入口类
+### 2、主程序类、主入口类
 
 ```java
 @SpringBootApplication
@@ -596,7 +596,7 @@ SpringBoot会从这四个位置全部加载主配置文件;**互补配置;**
 
 <<<<<<< HEAD
 
-###7、外部配置加载顺序
+### 7、外部配置加载顺序
 
 **SpringBoot 也可以从以下位置加载配置；优先级从高到低；高优先级的配置覆盖低优先级的配置，所有的配置会形成互补配置**
 
@@ -631,7 +631,7 @@ SpringBoot会从这四个位置全部加载主配置文件;**互补配置;**
 
 
 
-###<u>8、自动配置原理</u>
+### <u>8、自动配置原理</u>
 
 #### 1、自动配置原理
 
