@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @Value("${person.last-name}")
+//    @Value("${person.last-name}")
     private String name;
 
     @ResponseBody // return写回给浏览器

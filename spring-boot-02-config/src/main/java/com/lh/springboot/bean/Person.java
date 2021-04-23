@@ -6,9 +6,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 
 
 /**
@@ -24,7 +26,7 @@ import java.util.Map;
 //@PropertySource(value = {"classpath:person.properties"}) // classpath:后不加空格
 @Component
 @ConfigurationProperties(prefix = "person")
-//@Validated // 启动校验 例如 校验邮箱@Email类型
+@Validated // 启动校验 例如 校验邮箱@Email类型
 public class Person {
 
     /**
@@ -37,8 +39,8 @@ public class Person {
     // 现在 单个注入时
 //    @Value("${person.last-name}")
     private String lastName;
-//    @Value("#{11*2}")
-//    @Email
+//    @Value("#{11*2}") // #{SpEL} Spring表达式
+//    @Email() // 校验
     private Integer age;
     private Boolean boss;
     private Date birth;
@@ -47,18 +49,18 @@ public class Person {
     private List<Object> lists;
     private Dog dog;
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", boss=" + boss +
-                ", birth=" + birth +
-                ", maps=" + maps +
-                ", lists=" + lists +
-                ", dog=" + dog +
-                '}';
+    public Person(){}
+
+    public Person(String lastName, Integer age, Boolean boss, Date birth, Map<String, Object> maps, List<Object> lists, Dog dog) {
+        this.lastName = lastName;
+        this.age = age;
+        this.boss = boss;
+        this.birth = birth;
+        this.maps = maps;
+        this.lists = lists;
+        this.dog = dog;
     }
+
 
     public String getLastName() {
         return lastName;
@@ -114,5 +116,19 @@ public class Person {
 
     public void setDog(Dog dog) {
         this.dog = dog;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", boss=" + boss +
+                ", birth=" + birth +
+                ", maps=" + maps +
+                ", lists=" + lists +
+                ", dog=" + dog +
+                '}';
     }
 }
