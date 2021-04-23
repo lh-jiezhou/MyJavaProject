@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.4.RELEASE</version>
+        <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lh</groupId>
@@ -13,13 +13,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-04-web-restfulcrud</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <java.version>11</java.version>
     </properties>
-
     <dependencies>
-        <!-- 引入 web 模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -29,12 +26,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
