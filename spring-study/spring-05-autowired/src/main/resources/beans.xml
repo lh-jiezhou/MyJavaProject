@@ -3,4 +3,25 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="cat" class="com.lh.pojo.Cat"/>
+    <bean id="dog" class="com.lh.pojo.Dog"/>
+
+    <!--<bean id="people" class="com.lh.pojo.People">-->
+        <!--<property name="name" value="李豪"/>-->
+        <!--<property name="cat" ref="cat"/>-->
+        <!--<property name="dog" ref="dog"/>-->
+    <!--</bean>-->
+
+    <!--自动装配
+     autowire="byName"
+        会自动在容器上下文中查找，和自己对象set方法后面的值对应beanid
+     autowire="byType"
+        会自动在容器上下文中查找，和自己对象属性类型相对的bean
+     -->
+    <bean id="people" class="com.lh.pojo.People" autowire="byName">
+        <property name="name" value="李豪"/>
+    </bean>
+
+
+
 </beans>

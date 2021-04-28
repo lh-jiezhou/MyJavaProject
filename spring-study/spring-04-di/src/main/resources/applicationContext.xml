@@ -3,4 +3,59 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+    <import resource="userbeans.xml"/>
+
+    <bean id="address" class="com.lh.pojo.Address">
+        <property name="address" value="长沙"/>
+    </bean>
+
+    <bean id="student" class="com.lh.pojo.Student">
+        <!--1、普通类型set注入, value-->
+        <property name="name" value="李豪"/>
+        <!--2、Bean对象注入, ref-->
+        <property name="address" ref="address"/>
+        <!--3、数组注入-->
+        <property name="books">
+            <array>
+                <value>西游记</value>
+                <value>水浒传</value>
+            </array>
+        </property>
+        <!--4、List注入-->
+        <property name="hobbies">
+            <list>
+                <value>羽毛球</value>
+                <value>足球</value>
+            </list>
+        </property>
+        <!--5、Map注入-->
+        <property name="card">
+            <map>
+                <entry key="ID" value="430521"/>
+                <entry key="Bank" value="6217"/>
+            </map>
+        </property>
+        <!--6、Set注入-->
+        <property name="games">
+            <set>
+                <value>王者</value>
+                <value>吃鸡</value>
+            </set>
+        </property>
+        <!--7、空值注入-->
+        <property name="wife">
+            <null/>
+        </property>
+        <!--8、Properties注入-->
+        <property name="info">
+            <props>
+                <prop key="id">190327045</prop>
+                <prop key="sex">男</prop>
+                <prop key="username">李豪</prop>
+            </props>
+        </property>
+
+    </bean>
+
 </beans>

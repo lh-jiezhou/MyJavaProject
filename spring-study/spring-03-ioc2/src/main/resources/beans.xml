@@ -3,4 +3,25 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--存在无参构造函数时的set注入-->
+    <!--<bean id="user" class="com.lh.pojo.User">-->
+        <!--<property name="name" value="李豪"/>-->
+    <!--</bean>-->
+    <!--没有无参构造函数，使用有参构造函数-->
+    <bean id="user" class="com.lh.pojo.User">
+        <!--1、下标匹配-->
+        <!--<constructor-arg index="0" value="下标 李豪"/>-->
+        <!--2、类型匹配, 有重复类型则无法使用-->
+        <!--<constructor-arg type="java.lang.String" value="类型 李豪"/>-->
+        <!--3、通过构造函数中的参数名-->
+        <constructor-arg name="name" value="参数名 李豪"/>
+    </bean>
+
+    <bean id="userT" class="com.lh.pojo.UserT">
+        <property name="name" value="UserT 李豪"/>
+    </bean>
+
+    <!--别名-->
+    <alias name="user" alias="userNew"/>
+
 </beans>
