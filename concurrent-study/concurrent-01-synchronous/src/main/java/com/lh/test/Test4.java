@@ -19,6 +19,9 @@ public class Test4 {
                 FileReader.read(Constants.MP4_FULL_PATH);
             }
         };
+        String x = "1";
+        int y = 1, z = 2;
+        System.out.println(x+y+z);
 
 //        t1.run(); // 仍然是在main线程
         t1.start(); // 新线程

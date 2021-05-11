@@ -29,8 +29,8 @@ public class TestWaitNotify {
             synchronized (obj) {
                 log.debug("执行...");
                 try {
-//                    obj.wait();
-                    obj.wait(1000);
+                    obj.wait();
+//                    obj.wait(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
