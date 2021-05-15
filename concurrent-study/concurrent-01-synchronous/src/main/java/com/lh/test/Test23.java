@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 用ReentrantLock中 tryLock() 解决哲学家问题中的死锁
- *
+ *      tryLock()获取锁失败 会释放之前的锁
  */
 @Slf4j(topic = "c.Test23")
 public class Test23 {
@@ -43,11 +43,23 @@ class Philosopher extends Thread { // 继承线程类
     @Override
     public void run() { //
         while (true) {
+            // 采用 tryLock() 避免死锁
             //　尝试获得左手筷子
-            synchronized (left) {
-                // 尝试获得右手筷子
-                synchronized (right) {
-                    eat(); // 吃饭
+//            synchronized (left) {
+            if(left.tryLock()){ // true 表示获得到锁
+                try {
+                    // 尝试获得右手筷子
+//                    synchronized (right) {
+                    if(right.tryLock()){
+                        try {
+                            // 获得两个筷子
+                            eat(); // 吃饭
+                        } finally {
+                            right.unlock();
+                        }
+                    }
+                } finally {
+                    left.unlock(); // 释放手里的筷子
                 }
             }
         }

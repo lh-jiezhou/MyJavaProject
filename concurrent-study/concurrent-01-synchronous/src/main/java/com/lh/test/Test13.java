@@ -24,13 +24,18 @@ public class Test13 {
 // 两个类
 @Slf4j(topic = "c.TwoPhaseTermination")
 class TwoPhaseTermination {
+    // 监控线程
     private Thread monitor;
+    // 新增 volatile 实现 p138
+    private volatile boolean stop = false; //
+
 
     // 启动监控线程
     public void start(){
         monitor = new Thread(() -> {
             while(true){
                 Thread current = Thread.currentThread();
+//                if(stop){
                 if(current.isInterrupted()){ // 标记为true说明被打断
                     log.debug("料理后事");
                     break;
@@ -51,6 +56,7 @@ class TwoPhaseTermination {
 
     // 停止监控线程
     public void stop(){
+        stop = true;
         monitor.interrupt(); // 打断
     }
 

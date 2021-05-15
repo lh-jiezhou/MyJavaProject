@@ -13,6 +13,13 @@
  * System.out.format();
  * System.out.printf();
  * @param args
+ *
+ * hasNext（） 是检测 还有没有下一个输入
+ * hasNextLine（） 是检测下一行有没有输入
+ *
+ * next（）是指针移动到当前下标，并取出下一个输入
+ * nextLine（） 把指针移动到下一行 让然后取出当前这一行的输入
+
  */
 package com.lh.utils;
 
@@ -56,8 +63,10 @@ public class InputOJUtils {
     // 输入字符串
     void inputStr(){
         Scanner sc = new Scanner(System.in);
-        String s1 = sc.next(); // nextLine(); 同行输入(空格间隔) 与 换行输入
-        String s2 = sc.next();
+//        String s1 = sc.next(); // 同行输入(空格间隔) 与 换行输入
+//        String s2 = sc.next();
+        String s1 = sc.nextLine(); // 同行 - 输入有空格也会包含进去
+        String s2 = sc.nextLine();
         System.out.println("s1 length:"+s1.length());
         System.out.println(s1);
         System.out.println("s2 length:"+s2.length());
