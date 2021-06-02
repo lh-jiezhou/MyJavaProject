@@ -15,4 +15,6 @@ class SpringBoot04WebRestfulcrudApplicationTests {
         System.out.println(好s);
     }
 
+
+
 }
