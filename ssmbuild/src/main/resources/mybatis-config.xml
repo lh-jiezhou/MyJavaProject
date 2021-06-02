@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--配置数据源, 交给Spring去做-->
+
+    <!--此文件两件事
+        1、改名typeAliases
+        2、设置setting
+    -->
+    <settings>
+        <!--显示sql日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <typeAliases>
+        <!--此包下文件自动取别名-->
+        <package name="com.lh.pojo"/>
+    </typeAliases>
+
+    <!--映射mapper-->
+    <mappers>
+        <package name="com.lh.dao"/>
+    </mappers>
+
+
+
+
+
+</configuration>
