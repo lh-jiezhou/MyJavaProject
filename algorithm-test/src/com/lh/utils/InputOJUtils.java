@@ -27,15 +27,52 @@ import java.util.Scanner;
 
 public class InputOJUtils {
 
+    // 测试反射 Test3.java
+    private int temp;
+    public InputOJUtils(){}
+    public InputOJUtils(int temp) { this.temp = temp; }
+    public void setTemp(int temp) { this.temp = temp; }
+    @Override
+    public String toString() {
+        return "InputOJUtils{" +
+                "temp=" + temp +
+                '}';
+    }
+
     public static void main(String[] args){
         InputOJUtils test = new InputOJUtils();
+        test.inputIntAndStr();
 //        test.inputNum();  // 数字
 //        test.inputNumEOF(); // 以EOF结束 或 Ctrl+Z
-        test.inputStr(); // 输入字符串
+//        test.inputStr(); // 输入字符串
 //        test.inputSingle(); //单行输入多个参数
 //        test.inputArray(); // 输入数组
 //        test.inputDoubleDimensionArray(); // int 二维数组
 //        test.inputDoubleDimensionChar(); // char 二维数组
+    }
+
+    // int与String交叉输入 方式
+    void inputIntAndStr(){
+        Scanner sc = new Scanner(System.in);
+        // 先输入数字 再输入字符串，不正确；
+        // 由于java虚拟式识别的问题
+//        int a = sc.nextInt();
+//        String s1 = sc.nextLine();
+
+        // 处理方式1: 类型转型
+//        String tmp = sc.nextLine();
+//        int a = Integer.parseInt(tmp);
+//        String s1 = sc.nextLine();
+
+        // 处理方式2: 多出一行
+        int a = sc.nextInt();
+        sc.nextLine(); //
+        String s1 = sc.nextLine();
+
+        // 处理方式3: 再新建一个Scanner对象
+
+        System.out.println(a);
+        System.out.println(s1);
     }
 
     // 数字
@@ -65,8 +102,12 @@ public class InputOJUtils {
         Scanner sc = new Scanner(System.in);
 //        String s1 = sc.next(); // 同行输入(空格间隔) 与 换行输入
 //        String s2 = sc.next();
+
+        // 怎样完成 int 与 nextLine() 交叉输入？？？
+//        int a = sc.nextInt();
         String s1 = sc.nextLine(); // 同行 - 输入有空格也会包含进去
         String s2 = sc.nextLine();
+        int b = sc.nextInt();
         System.out.println("s1 length:"+s1.length());
         System.out.println(s1);
         System.out.println("s2 length:"+s2.length());
