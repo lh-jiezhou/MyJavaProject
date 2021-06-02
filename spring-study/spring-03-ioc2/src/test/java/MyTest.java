@@ -19,7 +19,7 @@ public class MyTest {
         // UserT同时也被实例化了
         User user2 = (User) applicationContext.getBean("user");
         user.show();
-        System.out.println(user == user2);
+        System.out.println(user == user2); // true 只实例化一次
 
         User userNew = (User)applicationContext.getBean("userNew");
         user.show();

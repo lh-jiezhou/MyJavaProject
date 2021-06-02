@@ -7,6 +7,7 @@
     <!--<bean id="user" class="com.lh.pojo.User">-->
         <!--<property name="name" value="李豪"/>-->
     <!--</bean>-->
+
     <!--没有无参构造函数，使用有参构造函数-->
     <bean id="user" class="com.lh.pojo.User">
         <!--1、下标匹配-->
