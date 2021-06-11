@@ -1,5 +1,6 @@
 ## Spring-Study
     Spring学习记录
+    官方文档 https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-p-namespace
     https://mp.weixin.qq.com/mp/homepage?__biz=Mzg2NTAzMTExNg==&hid=3&sn=456dc4d66f0726730757e319ffdaa23e&scene=18#wechat_redirect
     
 ### 1、Spring
