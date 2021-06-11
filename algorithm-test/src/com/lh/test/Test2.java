@@ -1,68 +1,67 @@
 package com.lh.test;
 
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
 
+/**
+ * lambda表达式：
+ *  可选类型声明：不需要声明参数类型，编译器可以统一识别参数值。
+ *  可选的参数圆括号：一个参数无需定义圆括号，但多个参数需要定义圆括号。
+ *  可选的大括号：如果主体包含了一个语句，就不需要使用大括号。
+ *  可选的返回关键字：如果主体只有一个表达式返回值则编译器会自动返回值，大括号需要指定明表达式返回了一个数值。
+ */
 public class Test2 {
+    public static void main(String args[]){
+        Test2 tester = new Test2();
 
+        // 类型声明
+        MathOperation addition = (int a, int b) -> a + b;
 
-    /*请完成下面这个函数，实现题目要求的功能
-    当然，你也可以不按照下面这个模板来作答，完全按照自己的想法来 ^-^
-    ******************************开始写代码******************************/
-    static int procee(int[] scores, int[] cards) {
-        // 贪心
-        int index = -1;
-        int res = scores[0];
-        int k = 0; // 已经到的位置
-        int count = 0; // 已使用的卡片张数
-        while(count < cards.length){ //
-            int curMax = -1;
-            for(int i=0; i<cards.length && cards[i] != 0; i++){
-                // 非零卡片
-                int flag = k+cards[i]; // 可达的位置
-                if(flag >= scores.length) return res; // 到达终点 提前退出
-                if(scores[flag] > curMax){
-                    curMax = scores[flag];
-                    index = i; // 最终选取的卡片
-                }
+        // 不用类型声明
+        MathOperation subtraction = (a, b) -> a - b;
+        // 常规形式
+        MathOperation subtraction2  = new MathOperation() { // new 一个接口; 重写方法; 简化时将new 与方法名都删除
+            @Override
+            public int operation(int a, int b) {
+                return a-b;
             }
-            k += cards[index]; // 前进几步
-            cards[index] = 0; // 已使用的卡片
-            count++; // 已使用的卡片张数
-            res += curMax; // 贪心 当前最大值
-        }
-        return res;
+        };
+
+
+        // 大括号中的返回语句
+        MathOperation multiplication = (int a, int b) -> { return a * b; };
+
+        // 没有大括号及返回语句
+        MathOperation division = (int a, int b) -> a / b;
+
+        System.out.println("10 + 5 = " + tester.operate(10, 5, addition));
+        System.out.println("10 - 5 = " + tester.operate(10, 5, subtraction));
+        System.out.println("10 - 5 = " + tester.operate(10, 5, subtraction2));
+        System.out.println("10 x 5 = " + tester.operate(10, 5, multiplication));
+        System.out.println("10 / 5 = " + tester.operate(10, 5, division));
+
+        // 不用括号
+        GreetingService greetService1 = message ->
+                System.out.println("Hello " + message);
+
+        // 用括号
+        GreetingService greetService2 = (message) ->
+                System.out.println("Hello " + message);
+
+        greetService1.sayMessage("Runoob");
+        greetService2.sayMessage("Google");
     }
-    /******************************结束写代码******************************/
 
-
-    public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
-        int res;
-
-        int _scores_size = 0;
-        _scores_size = Integer.parseInt(in.nextLine().trim());
-        int[] _scores = new int[_scores_size];
-        int _scores_item;
-        for(int _scores_i = 0; _scores_i < _scores_size; _scores_i++) {
-            _scores_item = Integer.parseInt(in.nextLine().trim());
-            _scores[_scores_i] = _scores_item;
-        }
-
-        int _cards_size = 0;
-        _cards_size = Integer.parseInt(in.nextLine().trim());
-        int[] _cards = new int[_cards_size];
-        int _cards_item;
-        for(int _cards_i = 0; _cards_i < _cards_size; _cards_i++) {
-            _cards_item = Integer.parseInt(in.nextLine().trim());
-            _cards[_cards_i] = _cards_item;
-        }
-
-        res = procee(_scores, _cards);
-        System.out.println(String.valueOf(res));
-
+    @FunctionalInterface
+    interface MathOperation {
+        int operation(int a, int b);
     }
+
+    @FunctionalInterface
+    interface GreetingService {
+        void sayMessage(String message);
+    }
+
+    private int operate(int a, int b, MathOperation mathOperation){
+        return mathOperation.operation(a, b);
+    }
+
 }
