@@ -94,13 +94,13 @@ public class HelloController {
         <version>2.3.1.RELEASE</version>
  </parent>
 
-它的父项目是
-<parent>
+<!--它的父项目是-->
+ <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
     <version>2.3.1.RELEASE</version>
-</parent>
-他来真正管理Spring Boot 应用里面的所有依赖版本
+ </parent>
+<!--他来真正管理Spring Boot 应用里面的所有依赖版本-->
 ```
 
 Spring Boot 的版本仲裁中心；
@@ -114,7 +114,7 @@ Spring Boot 的版本仲裁中心；
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
-不需要写版本号，因为Spring Boot自动仲裁
+<!--不需要写版本号，因为Spring Boot自动仲裁-->
 ```
 
 spring-boot-starter-**web**：
