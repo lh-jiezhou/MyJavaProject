@@ -4,6 +4,10 @@ import java.nio.ByteBuffer;
 
 import static com.lh.util.ByteBufferUtil.debugAll;
 
+/**
+ * buffer 的读/写模式
+ *
+ */
 public class TestByteBufferReadWrite {
 
     public static void main(String[] args) {
