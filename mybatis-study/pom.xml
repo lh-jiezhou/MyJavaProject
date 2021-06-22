@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>mybatis-01</module>
+        <module>mybatis-09</module>
     </modules>
 
     <!--父工程-->
@@ -30,9 +31,9 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
-            <scope>test</scope>
+            <version>5.7.2</version>
         </dependency>
+
 
 
 
