@@ -11,6 +11,7 @@
     <modules>
         <module>concurrent-01-synchronous</module>
         <module>concurrent-02-create</module>
+        <module>concurrent-04-mytest</module>
     </modules>
 
     <properties>

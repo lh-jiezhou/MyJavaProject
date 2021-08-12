@@ -17,12 +17,14 @@ public class TestSemaphore {
     public static void main(String[] args) {
 
         // 1. 创建 semaphore 对象；参数 permits 许可的线程数
-        Semaphore semaphore = new Semaphore(3);
+        Semaphore semaphore = new Semaphore(0);
+        semaphore.release();
 
         // 2. 10个线程同时运行
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
                 try {
+                    log.debug("start..{}", semaphore.availablePermits());
                     // 获得许可
                     semaphore.acquire();
                 } catch (InterruptedException e) {
