@@ -24,12 +24,14 @@ public class EventLoopServer {
     public static void main(String[] args) {
 
         // 细分2：创建一个独立的 EventLoopGroup 用于专门处理 ChannelHandler 中时间较长的操作
-        EventLoopGroup group = new DefaultEventLoopGroup(); // 普通任务，定时任务
+        // 普通任务，定时任务
+        EventLoopGroup group = new DefaultEventLoopGroup();
 
         new ServerBootstrap()
                 // boss 和 worker 进一步细分
                 // 细分1：第一个参数 boss 只负责 serverSocketChannel 上 accept 事件,第一个参数 worker 只负责 socketChannel 上的读写
-                .group(new NioEventLoopGroup(), new NioEventLoopGroup(2)) // worker 线程设置为两个
+                // worker 线程设置为两个
+                .group(new NioEventLoopGroup(), new NioEventLoopGroup(2))
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override

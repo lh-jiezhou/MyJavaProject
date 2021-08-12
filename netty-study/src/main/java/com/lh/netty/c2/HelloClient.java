@@ -8,6 +8,10 @@ import io.netty.handler.codec.string.StringEncoder;
 
 import java.net.InetSocketAddress;
 
+/**
+ * Netty 写一个 hello world!
+ *      客户端发数据给服务端
+ */
 public class HelloClient {
 
     public static void main(String[] args) throws InterruptedException {
