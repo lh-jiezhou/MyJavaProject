@@ -1,8 +1,16 @@
-package com.lh;
+package com.lh.exam;
 
 import java.util.*;
 
-public class Main {
+/**
+ * 查询满足区间的记录
+ * 携程2019届秋招专业笔试-研发方向
+ *
+ * 有一批订单记录，数据有订单号，入店时间，离店时间；
+ * 输入一个时间值A，需要在这批记录中找到符合入离店时间范围（A大于等于入店时间，并且A小于等于离店时间）内的所有记录。
+ * 单次查询时间复杂度控制在O(logN)
+ */
+public class XieChenSort {
 
     public static void main(String[] args) {
         /**
@@ -59,6 +67,4 @@ public class Main {
         }
 
     }
-
-
 }

@@ -24,23 +24,29 @@ import java.util.*;
  */
 public class LRU {
 
-    static private int capacity; // 容量
+    /**
+     * 容量
+     */
+    static private int capacity;
     static private Map<Integer, Integer> map;
 
     public static void main(String[] args) {
         LRU test = new LRU();
         Scanner sc = new Scanner(System.in);
         capacity = Integer.valueOf(sc.nextLine().trim());
-        map = new LinkedHashMap<>(); // 遍历LinkedHashMap会按照插入顺序访问元素
+        // 遍历LinkedHashMap会按照插入顺序访问元素
+        map = new LinkedHashMap<>();
         while(sc.hasNextLine()){
-            String command = sc.nextLine().trim(); // 一行 去除两端空格
+            // 一行 去除两端空格
+            String command = sc.nextLine().trim();
             if(capacity > 0 && command.charAt(0) == 'p'){
-                // 输入精髓
                 int key = Integer.valueOf(command.substring(2, command.lastIndexOf(" ")));
-                int value = Integer.valueOf(command.substring(command.lastIndexOf(" ")+1)); // 截取至末尾
+                // 截取至末尾
+                int value = Integer.valueOf(command.substring(command.lastIndexOf(" ")+1));
                 test.put(key, value);
             } else if(capacity >= 0 && command.charAt(0) == 'g'){
-                int key = Integer.valueOf(command.substring(2)); // 截取到末尾
+                // 截取到末尾
+                int key = Integer.valueOf(command.substring(2));
                 System.out.println(test.get(key));
             }
         }
@@ -50,21 +56,28 @@ public class LRU {
         if(map.containsKey(key)){
             int value = map.get(key);
             map.remove(key);
-            map.put(key, value); // 重新插入以更新优先级
+            // 重新插入以更新优先级
+            map.put(key, value);
             return value;
         }
-        return -1; // 不存在返回-1
+        // 不存在返回-1
+        return -1;
     }
 
-    void put(int key, int value){ // 插入值,旧key更新值,不更新优先级
-        if(map.containsKey(key)){ // 存在key, 仅更新值,不更新优先级
-            map.replace(key, value); // ?? 此方法会不会更新优先级
+    // 插入值,旧key更新值,不更新优先级
+    void put(int key, int value){
+        // 存在key, 仅更新值,不更新优先级
+        if(map.containsKey(key)){
+            // ?? 此方法会不会更新优先级
+            map.replace(key, value);
         } else { // 新值
-            if(map.size() < capacity){ // 容量够
+            // 容量够
+            if(map.size() < capacity){
                 map.put(key, value);
             } else { // 容量不够,删除元素,更新优先级
                 Iterator it = map.keySet().iterator();
-                map.remove(it.next()); // 移出最先插入的
+                // 移出最先插入的
+                map.remove(it.next());
                 map.put(key, value);
             }
         }
