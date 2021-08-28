@@ -1,4 +1,4 @@
-package com.lh.exam;
+package com.lh.base;
 
 /**
  * LeetCode 208. 实现 Trie (前缀树/字典树)
@@ -9,26 +9,35 @@ package com.lh.exam;
  */
 class Trie {
 
-    // 维护一个前缀树
+    /**
+     * 维护一个前缀树
+     */
     Trie[] children;
-    boolean isEnd; // 标记
+    /**
+     *  标记
+    */
+    boolean isEnd;
 
     /** Initialize your data structure here. */
     public Trie() {
-        children = new Trie[26]; // 26个字母
-        isEnd = false; // 是否为单词结尾
+        // 26个字母
+        children = new Trie[26];
+        // 是否为单词结尾
+        isEnd = false;
     }
     
     /** Inserts a word into the trie. */
     public void insert(String word) {
-        Trie node = this; // 当前结点
+        // 当前结点
+        Trie node = this;
         for(char c: word.toCharArray()){
             if(node.children[c-'a'] == null){
                 node.children[c-'a'] = new Trie();
             }
             node = node.children[c-'a'];
         }
-        node.isEnd = true; // 完成插入并标记
+        // 完成插入并标记
+        node.isEnd = true;
     }
     
     /** Returns if the word is in the trie. */
@@ -36,16 +45,17 @@ class Trie {
         Trie node = this;
         for(char c: word.toCharArray()){
             if(node.children[c-'a'] == null){
-                return false; // 查找匹配失败
+                // 查找匹配失败
+                return false;
             }
             node = node.children[c-'a'];
         }
-        return node.isEnd; // 是否为结尾
+        // 是否为结尾
+        return node.isEnd;
     }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
-
         Trie node = this;
         for(char c: prefix.toCharArray()){
             if(node.children[c-'a'] == null){
@@ -53,18 +63,22 @@ class Trie {
             }
             node = node.children[c-'a'];
         }
-        return true; // prefix匹配完即可
+        // prefix匹配完即可
+        return true;
     }
-
 
     public static void main(String[] args) {
         Trie trie = new Trie();
         trie.insert("apple");
-        trie.search("apple");   // 返回 True
-        trie.search("app");     // 返回 False
-        trie.startsWith("app"); // 返回 True
+        // 返回 True
+        trie.search("apple");
+        // 返回 False
+        trie.search("app");
+        // 返回 True
+        trie.startsWith("app");
         trie.insert("app");
-        trie.search("app");     // 返回 True
+        // 返回 True
+        trie.search("app");
     }
 
 }

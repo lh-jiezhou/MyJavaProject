@@ -42,6 +42,15 @@ public class DataTypeUtils {
 //        System.out.println(strList3.get(3));
 
 
+         // char 数组 转 String
+         char[][] board = new char[2][2];
+         List<String> list = new LinkedList<>();
+         for(char[] chars: board){
+            // 用法
+            list.add(new String(chars));
+         }
+
+
     }
 
 

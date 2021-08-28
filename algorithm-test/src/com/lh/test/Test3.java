@@ -16,6 +16,9 @@ import java.lang.reflect.Method;
  */
 public class Test3 {
 
+    public Test3() {
+    }
+
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         // 1、获取类的class对象

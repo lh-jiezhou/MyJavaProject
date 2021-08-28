@@ -5,10 +5,7 @@ import java.util.*;
 public class TempAlgorithm {
 
     public static void main(String[] args) {
-        Date date=new Date();
-        System.out.printf("%tD%n",date);
-        char c = 97;
-        System.out.println(c);
+        System.out.println(true || true && false );
     }
 
     public int countPalindromicSubsequence1(String s) {

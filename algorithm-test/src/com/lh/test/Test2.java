@@ -18,7 +18,8 @@ public class Test2 {
         // 不用类型声明
         MathOperation subtraction = (a, b) -> a - b;
         // 常规形式
-        MathOperation subtraction2  = new MathOperation() { // new 一个接口; 重写方法; 简化时将new 与方法名都删除
+        // new 一个接口; 重写方法; 简化时将new 与方法名都删除
+        MathOperation subtraction2  = new MathOperation() {
             @Override
             public int operation(int a, int b) {
                 return a-b;
