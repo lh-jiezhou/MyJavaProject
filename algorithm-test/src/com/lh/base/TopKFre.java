@@ -31,7 +31,7 @@ public class TopKFre {
             map.put(num, count);
         }
 
-        // 优先队列 最大堆
+        // 优先队列 小顶堆
         PriorityQueue<int[]> queue = new PriorityQueue<int[]>((int[] a, int[] b) -> {
             return a[1] - b[1];
         });

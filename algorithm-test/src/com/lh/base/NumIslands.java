@@ -1,4 +1,4 @@
-package com.lh.exam;
+package com.lh.base;
 
 /**
  * LeetCode 200 岛屿数量

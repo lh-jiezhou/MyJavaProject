@@ -6,5 +6,8 @@ package com.lh.base;
  */
 public class FourNums {
 
+    //TODO 写一个算法
+
+
 
 }

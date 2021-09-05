@@ -15,7 +15,7 @@ import java.util.Scanner;
  *          list.add(new String(chars));
  *       }
  */
-public class Queue {
+public class Queen {
 
     static List<List<String>> res;
 
