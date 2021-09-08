@@ -12,6 +12,7 @@ public class ArrayQueue {
 
     private int maxSize;
     private int[] arr;
+    // 默认是0
     private int front;
     private int rear;
 
