@@ -13,21 +13,32 @@ public class Test1 {
 
 class A {
     public int a = 0;
+
     public void fun(){
         System.out.println("A");
+    }
+
+    public static void getS(){
+        System.out.println("staticA");
     }
 }
 
 class B extends A {
     public int a = 1;
 
+    @Override
     public void fun() {
         System.out.println("B");
+    }
+
+    public static void getS(){
+        System.out.println("staticB");
     }
 
     public static void main(String[] args) {
         A classA = new B();
         System.out.println(classA.a);
         classA.fun();
+        classA.getS();
     }
 }
