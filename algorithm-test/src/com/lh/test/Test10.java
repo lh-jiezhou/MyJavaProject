@@ -36,11 +36,30 @@ public class Test10 {
         System.out.println(ss);
         System.out.println(new String(aa));
 
+        re(49);
+        re(200);
+
     }
 
     public static void change(String str, char[] arr){
         str = "change";
         arr[0] = 'c';
+    }
+
+    private static void re(int i) {
+        Integer num1 = new Integer(i);
+        Integer num2 = new Integer(i);
+        Integer num3 = i;
+        Integer num4 = Integer.valueOf(i);
+        Integer num5 = Integer.valueOf(i);
+
+        System.out.print(num1 == num2);
+        System.out.print(",");
+        System.out.print(num2 == num3);
+        System.out.print(",");
+        System.out.print(num3 == num4);
+        System.out.print(",");
+        System.out.print(num4 == num5);
     }
 
 
