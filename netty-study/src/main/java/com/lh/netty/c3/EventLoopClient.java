@@ -16,8 +16,8 @@ import java.net.InetSocketAddress;
 public class EventLoopClient {
 
     public static void main(String[] args) throws InterruptedException {
+//        test1();
         test2();
-
     }
 
     /**
@@ -45,14 +45,14 @@ public class EventLoopClient {
                 .connect(new InetSocketAddress("localhost", 8080));
 
 
-//        // 2.1 使用 sync 方法同步处理结果
-//        // 阻塞当前线程 直到 nio 线程建立连接完毕
-//        channelFuture.sync();
-//        // main 无阻塞向下运行 获取channel 此时异步的connect没有运行完成 所以channel未建立连接
-//        Channel channel = channelFuture.channel();
-//        log.debug("{}", channel);
-//        // 向服务端发送数据
-//        channel.writeAndFlush("hello world");
+        // 2.1 使用 sync 方法同步处理结果 ctrl+shift+/ 多行注释
+     /*   // 阻塞当前线程 直到 nio 线程建立连接完毕
+        channelFuture.sync();
+        // main 无阻塞向下运行 获取channel 此时异步的connect没有运行完成 所以channel未建立连接
+        Channel channel = channelFuture.channel();
+        log.debug("{}", channel);
+        // 向服务端发送数据
+        channel.writeAndFlush("hello world");*/
 
 
         // 2.2 使用 addListener(回调对象) 方法异步处理结果

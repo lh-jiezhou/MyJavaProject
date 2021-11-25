@@ -46,8 +46,8 @@ public class EventLoopServer {
                         }).addLast(group, "handle2", new ChannelInboundHandlerAdapter(){
                             @Override   // ByteBuf
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                ByteBuf buf = (ByteBuf) msg;
-                                log.debug(buf.toString(Charset.defaultCharset()));
+//                                ByteBuf buf = (ByteBuf) msg;
+//                                log.debug(buf.toString(Charset.defaultCharset()));
                             }
                         });
 
